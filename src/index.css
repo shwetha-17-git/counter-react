@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap');
+
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -27,6 +29,46 @@ body {
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  position: relative;
+}
+
+/* Ambient glow blobs */
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(100px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::before {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(232, 255, 71, 0.12) 0%, transparent 70%);
+  top: -100px;
+  left: -100px;
+  animation: drift1 10s ease-in-out infinite alternate;
+}
+
+body::after {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(255, 71, 87, 0.1) 0%, transparent 70%);
+  bottom: -80px;
+  right: -80px;
+  animation: drift2 12s ease-in-out infinite alternate;
+}
+
+@keyframes drift1 {
+  from { transform: translate(0, 0); }
+  to   { transform: translate(60px, 80px); }
+}
+
+@keyframes drift2 {
+  from { transform: translate(0, 0); }
+  to   { transform: translate(-60px, -60px); }
 }
 
 #root {
@@ -35,4 +77,116 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+.counter {
+  background: rgba(28, 28, 38, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(232, 255, 71, 0.15);
+  border-radius: 20px;
+  padding: 52px 64px;
+  text-align: center;
+  min-width: 320px;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.04) inset,
+    0 24px 64px rgba(0, 0, 0, 0.5),
+    0 0 80px rgba(232, 255, 71, 0.05);
+}
+
+.counter-label {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-top: 6px;
+  margin-bottom: 32px;
+}
+
+/* Flash effects on count change */
+.counter.flash-up {
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.04) inset,
+    0 24px 64px rgba(0, 0, 0, 0.5),
+    0 0 60px rgba(232, 255, 71, 0.25);
+  border-color: rgba(232, 255, 71, 0.4);
+  transition: box-shadow 0.15s, border-color 0.15s;
+}
+
+.counter.flash-down {
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.04) inset,
+    0 24px 64px rgba(0, 0, 0, 0.5),
+    0 0 60px rgba(255, 71, 87, 0.2);
+  border-color: rgba(255, 71, 87, 0.35);
+  transition: box-shadow 0.15s, border-color 0.15s;
+}
+
+.counter h1 {
+  font-family: var(--font-display);
+  font-size: 6.5rem;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 36px;
+  text-shadow: 0 0 40px rgba(232, 255, 71, 0.35);
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+button {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 11px 22px;
+  border-radius: 8px;
+  border: 1px solid var(--muted);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s, transform 0.1s;
+}
+
+button:hover {
+  background: var(--muted);
+  border-color: var(--muted);
+}
+
+button:active {
+  transform: scale(0.96);
+}
+
+/* Increment */
+button:first-child {
+  background: var(--accent);
+  color: var(--bg);
+  border-color: var(--accent);
+  font-weight: 600;
+  box-shadow: 0 0 20px rgba(232, 255, 71, 0.25);
+}
+
+button:first-child:hover {
+  background: var(--accent-dim);
+  border-color: var(--accent-dim);
+  box-shadow: 0 0 28px rgba(232, 255, 71, 0.4);
+}
+
+/* Decrement */
+button:nth-child(2) {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+button:nth-child(2):hover {
+  background: var(--danger);
+  color: var(--text);
+  box-shadow: 0 0 20px rgba(255, 71, 87, 0.3);
 }
